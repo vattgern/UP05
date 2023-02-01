@@ -26,7 +26,16 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'required',
-            'price' => 'required'
+            'price' => 'required|numeric'
+        ];
+    }
+    public function messages(){
+        return [
+            'name.required' => 'Название товара обезательна для заполнения',
+            'name.string' => 'Название товара должно быть строкой',
+            'description.required' => 'Описание обезательна для заполнения',
+            'price.required' => 'Цена товара обезательна для заполнения',
+            'price.numeric'=> 'Цена товара должна быть числовым значением'
         ];
     }
 }

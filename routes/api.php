@@ -24,13 +24,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/signUp', [AuthController::class, 'signUp']);
 Route::post('/signIn', [AuthController::class, 'signIn']);
-Route::post('/logout', [AuthController::class, 'logout']);
-
-
 
 // Для админа
 Route::group(['middleware' => 'admin'], function(){
     Route::post('/product', [ProductController::class, 'store']);
+    Route::patch('/product/{id}',[ProductController::class, 'update']);
+    Route::delete('/product/{id}', [ProductController::class, 'destroy']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 // Для клиента
@@ -47,6 +48,8 @@ Route::group(['middleware'=> 'user'], function(){
     Route::post('/order', [OrderController::class, 'store']);
     // Наши заказы
     Route::get('/order',[OrderController::class, 'all']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 

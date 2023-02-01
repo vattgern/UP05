@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SignInRequest extends FormRequest
+class ProductEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,16 @@ class SignInRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required|min:8'
+            'name' => 'string',
+            'description' => 'string',
+            'price' => 'numeric'
         ];
     }
     public function messages(){
         return [
-            'email.required' => 'Вы не заполнили почту',
-            'email.email' => 'Поле должно иметь (@, .com, .ru и т.д.)',
-            'password.required' => 'Вы не заполнили пароль',
-            'password.min' => 'Пароль должен быть не менее 8 символов',
+            'name.string' => 'Название товара должна быть строкой',
+            'description.string' => 'Описание товара должно быть строкой',
+            'price.numeric' => "Цена товара должно быть числом"
         ];
     }
 }

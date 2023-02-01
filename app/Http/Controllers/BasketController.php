@@ -20,7 +20,6 @@ class BasketController extends Controller
     }
     public function store($product_id){
         $product = Product::find($product_id);
-        dd($product);
         $user = User::where('token', '!=', null)->first();
         Basket::create([
             'user_id' => $user->id,
@@ -32,6 +31,13 @@ class BasketController extends Controller
     }
     public function destroy($id){
         $product = Basket::find($id);
+        if(!$product){
+            return response()->json([
+                'content' => [
+                    'message' => 'Позиция уже удалена из корзины'
+                ]
+            ]);
+        }
         $product->delete();
         return response()->json([
             'content' => [

@@ -13,14 +13,14 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
     public function signUp(SignUpRequest $request){
-        $passOne = $request->input('password');
-        $passTwo = $request->input('passwordTwo');
-        if($passOne !== $passTwo){
-            return response()->json([
-                'message' => 'Пароли не совпадают',
-                'code' => 401
-            ]);
-        }
+        // $passOne = $request->input('password');
+        // $passTwo = $request->input('passwordTwo');
+        // if($passOne !== $passTwo){
+        //     return response()->json([
+        //         'message' => 'Пароли не совпадают',
+        //         'code' => 401
+        //     ],401);
+        // }
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
@@ -43,13 +43,13 @@ class AuthController extends Controller
         ]);
     }
     public function signIn(SignInRequest $request){
-        $users = User::all();
-        $email = $request->input('email');
-        $password = Hash::make($request->input('password'));
         if(Auth::attempt($request->all())){
             $user = User::find(Auth::id());
-            $user->token = Str::random(32);
-            $user->save();
+
+            $user->update([
+                'token' => Str::random(32)
+            ]);
+
             return response()->json([
                 'user_token' => $user->token
             ]);
@@ -57,7 +57,7 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Неверные данные',
                 'code' => 401
-            ]);
+            ],401);
         }
     }
 }

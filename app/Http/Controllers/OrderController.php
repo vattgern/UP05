@@ -24,9 +24,9 @@ class OrderController extends Controller
 
         if($products->count() == 0){
             return response()->json([
-                'message' => 'Нет товаров для оформления заказа',
+                'message' => 'Корзина пуста',
                 'code' => 422
-            ]);
+            ], 422);
         } else {
             $arr = [];
             $fullPrice = 0;
